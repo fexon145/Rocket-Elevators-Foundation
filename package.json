@@ -1,0 +1,7 @@
+{
+  "name": "myapp",
+  "private": true,
+  "dependencies": {
+    "microsoft-cognitiveservices-speech-sdk": "^1.18.0"
+  }
+}

@@ -1,0 +1,77 @@
+<%= form_with(model: intervention, local: true)  do |form| %>
+  <% if intervention.errors.any? %>
+    <div class="col-md-12 text-center" id="error_explanation">
+      <h2><%= pluralize(intervention.errors.count, "error") %> prohibited this intervention from being saved:</h2>
+
+      <ul>
+      <% intervention.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div class="field" style="display: none;">
+    <%= form.label :author %>
+    <%= form.text_field :author, value:current_user.employee.id %>
+  </div>
+
+  <div class="field" >
+    <%= form.label(:customerID, "Select a Customer") %>
+    <%= form.select :customerID, Customer.all.collect {|c| [c.compagny_name, c.id]}, {include_blank: true}, :required => 'required',  :class => "col-md-2 text-center" %>
+  </div>
+
+  <div class="field" id="buildingDiv">
+    <%= form.label(:buildingID, "Select a Building") %>
+    <%= form.select :buildingID, Building.all.collect {|b| [b.id, b.id]}, {include_blank: true}, :required => 'required',  :class => "col-md-2 text-center" %>
+  </div>
+
+  <div class="field" id="batteryDiv">
+    <%= form.label(:batteryID, "Select a Battery if applicable") %>
+    <%= form.select :batteryID, Battery.all.collect {|p| [p.id, p.id]}, {include_blank: true}, :class => "col-md-2 text-center" %>
+  </div>
+
+  <div class="field" id="columnDiv">
+    <%= form.label(:columnID, "Select a Column if applicable") %>
+    <%= form.select :columnID, Column.all.collect {|p| [p.id, p.id]}, {include_blank: true}, :class => "col-md-2 text-center" %>
+  </div>
+
+  <div class="field" id="elevatorDiv">
+    <%= form.label(:elevatorID, "Select an Elevator if applicable") %>
+    <%= form.select :elevatorID, Elevator.all.collect {|p| [p.id, p.id]}, {include_blank: true},  :class => "col-md-2 text-center" %>
+  </div>
+
+  <div class="field">
+    <%= form.label(:employeeID, "Select an Employee") %>
+    <%= form.select :employeeID, Employee.all.collect {|e| [e.first_name + " " + e.last_name, e.id]}, {include_blank: "None"},  :class => "col-md-2 text-center" %>
+  </div>
+
+  <div class="field" style="display: none;">
+    <%= form.label :start_date_and_time_of_the_intervention %>
+    <%= form.text_field :start_date_and_time_of_the_intervention, value:nil %>
+  </div>
+
+  <div class="field" style="display: none;">
+    <%= form.label :end_date_and_time_of_the_intervention %>
+    <%= form.text_field :end_date_and_time_of_the_intervention, value:nil %>
+  </div>
+
+  <div class="field" style="display: none;">
+    <%= form.label :result %>
+    <%= form.text_field :result, value:"Incomplete" %>
+  </div>
+
+  <div class="field">
+    <%= form.label(:report, "Description") %>
+    <%= form.text_area :report, :class => "col-md-2", :required => 'required' %>
+  </div>
+
+  <div class="field" style="display: none;">
+    <%= form.label :status %>
+    <%= form.text_field :status, value:"Pending"%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'col-md-2 btn btn-primary', value:"Submit" %>
+  </div>
+<% end %>
